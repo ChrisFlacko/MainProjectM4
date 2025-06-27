@@ -1,3 +1,0 @@
-../Inc/hal_adc.c:20:6:Hal_ADC_vInit	6
-../Inc/hal_adc.c:55:6:Hal_ADC_vStart	1
-../Inc/hal_adc.c:60:10:Hal_ADC_u16ReadChannel	2

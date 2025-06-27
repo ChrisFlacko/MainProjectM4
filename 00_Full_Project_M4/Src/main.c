@@ -6,7 +6,6 @@
  ******************************************************************************
  */
 
-#include "../Inc/hal_memorymap.h"
 #include "../Inc/hal_gpio.h"
 #include "../Inc/hal_uart.h"
 #include "../Inc/hal_systick.h"
@@ -14,6 +13,10 @@
 #include "../Inc/hal_i2c.h"
 #include "../Inc/hal_adc.h"
 #include "main.h"
+
+#include <../Inc/peripherals.h>
+#include <../Inc/typedefs.h>
+#include <../Inc/memorymap.h>
 #include "stdint.h"
 
 /*********************************************************************************************************************************
@@ -35,7 +38,6 @@ void SysTick_Handler(void)
     if (dataADC != 0)
     {
         Hal_GPIO_vOutputToggle(5, GPIO_A);  // Your action
-        Hal_GPIO_vOutputEnable(5, GPIO_A);
     }
 }
 
