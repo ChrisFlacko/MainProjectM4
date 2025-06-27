@@ -1,0 +1,3 @@
+../Inc/hal_uart.c:26:6:Hal_USART3_vInit	1
+../Inc/hal_uart.c:50:6:Hal_USART3_vWriteFunction	2
+../Inc/hal_uart.c:58:6:Hal_USART2_vEnableSystemInterrupt	1

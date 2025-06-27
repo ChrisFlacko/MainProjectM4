@@ -1,0 +1,4 @@
+../Inc/hal_dma.c:20:6:Hal_DMA1_vInit	4	static
+../Inc/hal_dma.c:49:6:Hal_vEnableDMA	4	static
+../Inc/hal_dma.c:61:6:Hal_DMA1_vCorruptData	4	static
+../Inc/hal_dma.c:66:11:Hal_DMA1_vGetTransmitData	4	static

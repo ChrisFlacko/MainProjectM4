@@ -1,0 +1,4 @@
+../Inc/hal_dma.c:20:6:Hal_DMA1_vInit	1
+../Inc/hal_dma.c:49:6:Hal_vEnableDMA	1
+../Inc/hal_dma.c:61:6:Hal_DMA1_vCorruptData	1
+../Inc/hal_dma.c:66:11:Hal_DMA1_vGetTransmitData	1

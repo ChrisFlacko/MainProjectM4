@@ -1,0 +1,8 @@
+../Inc/hal_gpio.c:10:6:Hal_GPIO_vEnable	5
+../Inc/hal_gpio.c:37:6:Hal_GPIO_vTyp	5
+../Inc/hal_gpio.c:64:6:Hal_GPIO_vOutputSpeed	1
+../Inc/hal_gpio.c:69:6:Hal_GPIO_vPullUpPullDown	5
+../Inc/hal_gpio.c:93:6:Hal_GPIO_vOutputEnable	3
+../Inc/hal_gpio.c:113:6:Hal_GPIO_vOutputToggle	3
+../Inc/hal_gpio.c:133:6:Hal_GPIO_vOutputDisable	3
+../Inc/hal_gpio.c:153:6:Config_vSetupGPIO	1
