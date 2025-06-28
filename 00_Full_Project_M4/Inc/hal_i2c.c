@@ -49,8 +49,6 @@ void Hal_I2C_vInitMaster(uint8_t address)
 	I2C1->CR2 &= ~(1U << 11);	// 7bit addressing
 	I2C1->CR2 |= (8 << 16); 	// 8 bytes to send
 
-//	I2C1->TIMINGR = 0x0010061A;			// Config for 8MHz clock and 400kHz transmission
-
 	I2C1->CR1 |= (1U << 0);  // Enable peripheral
 }
 

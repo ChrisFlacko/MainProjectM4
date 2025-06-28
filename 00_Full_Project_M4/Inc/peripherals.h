@@ -19,6 +19,9 @@
 #define GPIOA ((TypeDef_GPIO*) GPIOA_BASE_ADDR)
 #define GPIOB ((TypeDef_GPIO*) GPIOB_BASE_ADDR)
 #define GPIOC ((TypeDef_GPIO*) GPIOC_BASE_ADDR)
+#define GPIOD ((TypeDef_GPIO*) GPIOD_BASE_ADDR)
+#define GPIOE ((TypeDef_GPIO*) GPIOE_BASE_ADDR)
+#define GPIOH ((TypeDef_GPIO*) GPIOH_BASE_ADDR)
 
 /* DMA */
 #define DMA1		((TypeDef_DMA1*) DMA1_BASE_ADDR)

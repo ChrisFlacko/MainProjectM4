@@ -1,4 +1,5 @@
-../Src/main.c:26:6:SysTick_Handler	3
-../Src/main.c:45:6:EXTI15_10_IRQHandler	2
-../Src/main.c:60:5:main	1
-../Src/main.c:116:6:Main_vSetupGPIOs	1
+../Src/main.c:28:6:SysTick_Handler	3
+../Src/main.c:49:6:PendSV_Handler	1
+../Src/main.c:55:6:EXTI15_10_IRQHandler	2
+../Src/main.c:69:5:main	1
+../Src/main.c:134:6:Main_vSetupGPIOs	1

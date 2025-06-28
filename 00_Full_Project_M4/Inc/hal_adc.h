@@ -9,6 +9,8 @@
 #define HAL_ADC_H_
 
 #include <memorymap.h>
+#include <typedefs.h>
+#include <peripherals.h>
 
 void Hal_ADC_vInit(void);
 

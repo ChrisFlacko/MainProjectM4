@@ -79,4 +79,7 @@ void Hal_GPIO_vOutputDisable(short u8PinNumber, GPIO_X gpio);
 
 void Config_vSetupGPIO(uint8_t u8Pin, uint8_t u8PinType, uint8_t u8Typ, uint8_t u8PuPd, GPIO_X gpio);
 
+/* Setup for the alternate function pin */
+void Hal_GPIO_vSetupAlternateFunction(uint8_t u8Pin, uint8_t u8AltFunc, GPIO_X gpio);
+
 #endif /* HAL_GPIO_H_ */
