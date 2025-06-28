@@ -8,25 +8,10 @@
 #ifndef HAL_I2C_H_
 #define HAL_I2C_H_
 
-#include "hal_memorymap.h"
+#include <memorymap.h>
+#include "typedefs.h"
+#include "peripherals.h"
 #include "hal_rcc.h"
-
-typedef struct
-{
-	__IO uint32_t CR1;
-	__IO uint32_t CR2;
-	__IO uint32_t OAR1;
-	__IO uint32_t OAR2;
-	__IO uint32_t TIMINGR;
-	__IO uint32_t TIMEOUTR;
-	__IO uint32_t ISR;
-	__IO uint32_t ICR;
-	__IO uint32_t PEC;
-	__IO uint32_t RXDR;
-	__IO uint32_t TXDR;
-}TypeDef_I2C1;
-
-#define I2C1		((TypeDef_I2C1*) I2C1_BASE_ADDR)
 
 #define OLED		0x3C
 

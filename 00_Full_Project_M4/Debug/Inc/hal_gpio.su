@@ -6,3 +6,4 @@
 ../Inc/hal_gpio.c:113:6:Hal_GPIO_vOutputToggle	16	static
 ../Inc/hal_gpio.c:133:6:Hal_GPIO_vOutputDisable	16	static
 ../Inc/hal_gpio.c:153:6:Config_vSetupGPIO	24	static
+../Inc/hal_gpio.c:160:6:Hal_GPIO_vSetupAlternateFunction	16	static

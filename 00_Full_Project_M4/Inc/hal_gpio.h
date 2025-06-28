@@ -4,16 +4,13 @@
  *  Created on: Jun 10, 2025
  *      Author: chris
  */
-
-#include "hal_memorymap.h"
-#include "hal_uart.h"
-
 #ifndef HAL_GPIO_H_
 #define HAL_GPIO_H_
 
-#define GPIOA ((TypeDef_GPIO*) GPIOA_BASE_ADDR)
-#define GPIOB ((TypeDef_GPIO*) GPIOB_BASE_ADDR)
-#define GPIOC ((TypeDef_GPIO*) GPIOC_BASE_ADDR)
+#include <memorymap.h>
+#include "typedefs.h"
+#include "peripherals.h"
+#include "hal_uart.h"
 
 /*
  * GPIO mode
@@ -48,25 +45,7 @@
  * GPIO activate
  */
 #define GPIO_PIN_EN		1
-
-/*
- * Define the GPIO struct
- */
-
-typedef struct
-{
-	__IO int MODER;
-	__IO int OTYPER;
-	__IO int OSPEEDR;
-	__IO int PUPDR;
-	__IO int IDR;
-	__IO int ODR;
-	__IO int BSRR;
-	__IO int LCKR;
-	__IO int AFRL;
-	__IO int AFRH;
-	__IO int BRR;
-}TypeDef_GPIO;
+#define GPIO_PIN_DIS	1
 
 typedef enum
 {
@@ -99,5 +78,8 @@ void Hal_GPIO_vOutputToggle(short u8PinNumber, GPIO_X gpio);
 void Hal_GPIO_vOutputDisable(short u8PinNumber, GPIO_X gpio);
 
 void Config_vSetupGPIO(uint8_t u8Pin, uint8_t u8PinType, uint8_t u8Typ, uint8_t u8PuPd, GPIO_X gpio);
+
+/* Setup for the alternate function pin */
+void Hal_GPIO_vSetupAlternateFunction(uint8_t u8Pin, uint8_t u8AltFunc, GPIO_X gpio);
 
 #endif /* HAL_GPIO_H_ */
