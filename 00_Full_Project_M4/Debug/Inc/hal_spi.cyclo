@@ -1,0 +1,2 @@
+../Inc/hal_spi.c:11:6:Hal_SPI_vInitReceiver	1
+../Inc/hal_spi.c:28:10:Hal_vSPIStartReceive	1

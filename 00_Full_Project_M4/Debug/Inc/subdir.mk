@@ -10,6 +10,7 @@ C_SRCS += \
 ../Inc/hal_gpio.c \
 ../Inc/hal_i2c.c \
 ../Inc/hal_rcc.c \
+../Inc/hal_spi.c \
 ../Inc/hal_systick.c \
 ../Inc/hal_uart.c 
 
@@ -19,6 +20,7 @@ OBJS += \
 ./Inc/hal_gpio.o \
 ./Inc/hal_i2c.o \
 ./Inc/hal_rcc.o \
+./Inc/hal_spi.o \
 ./Inc/hal_systick.o \
 ./Inc/hal_uart.o 
 
@@ -28,6 +30,7 @@ C_DEPS += \
 ./Inc/hal_gpio.d \
 ./Inc/hal_i2c.d \
 ./Inc/hal_rcc.d \
+./Inc/hal_spi.d \
 ./Inc/hal_systick.d \
 ./Inc/hal_uart.d 
 
@@ -39,7 +42,7 @@ Inc/%.o Inc/%.su Inc/%.cyclo: ../Inc/%.c Inc/subdir.mk
 clean: clean-Inc
 
 clean-Inc:
-	-$(RM) ./Inc/hal_adc.cyclo ./Inc/hal_adc.d ./Inc/hal_adc.o ./Inc/hal_adc.su ./Inc/hal_dma.cyclo ./Inc/hal_dma.d ./Inc/hal_dma.o ./Inc/hal_dma.su ./Inc/hal_gpio.cyclo ./Inc/hal_gpio.d ./Inc/hal_gpio.o ./Inc/hal_gpio.su ./Inc/hal_i2c.cyclo ./Inc/hal_i2c.d ./Inc/hal_i2c.o ./Inc/hal_i2c.su ./Inc/hal_rcc.cyclo ./Inc/hal_rcc.d ./Inc/hal_rcc.o ./Inc/hal_rcc.su ./Inc/hal_systick.cyclo ./Inc/hal_systick.d ./Inc/hal_systick.o ./Inc/hal_systick.su ./Inc/hal_uart.cyclo ./Inc/hal_uart.d ./Inc/hal_uart.o ./Inc/hal_uart.su
+	-$(RM) ./Inc/hal_adc.cyclo ./Inc/hal_adc.d ./Inc/hal_adc.o ./Inc/hal_adc.su ./Inc/hal_dma.cyclo ./Inc/hal_dma.d ./Inc/hal_dma.o ./Inc/hal_dma.su ./Inc/hal_gpio.cyclo ./Inc/hal_gpio.d ./Inc/hal_gpio.o ./Inc/hal_gpio.su ./Inc/hal_i2c.cyclo ./Inc/hal_i2c.d ./Inc/hal_i2c.o ./Inc/hal_i2c.su ./Inc/hal_rcc.cyclo ./Inc/hal_rcc.d ./Inc/hal_rcc.o ./Inc/hal_rcc.su ./Inc/hal_spi.cyclo ./Inc/hal_spi.d ./Inc/hal_spi.o ./Inc/hal_spi.su ./Inc/hal_systick.cyclo ./Inc/hal_systick.d ./Inc/hal_systick.o ./Inc/hal_systick.su ./Inc/hal_uart.cyclo ./Inc/hal_uart.d ./Inc/hal_uart.o ./Inc/hal_uart.su
 
 .PHONY: clean-Inc
 

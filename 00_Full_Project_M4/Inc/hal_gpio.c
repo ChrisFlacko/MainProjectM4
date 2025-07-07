@@ -12,18 +12,18 @@ void Hal_GPIO_vEnable(short u8PinNumber, char u8Type, GPIO_X gpio)
 	switch(gpio)
 	{
 	case GPIO_A:
-		GPIOA->MODER &= ~(3U << (2 * u8PinNumber));
-		GPIOA->MODER |= ((u8Type & 0x3U) << 2*u8PinNumber);
+		GPIOA->MODER &= GPIO_MODER_RESET(u8PinNumber);
+		GPIOA->MODER |= GPIO_MODER_SET(u8PinNumber, u8Type);
 		break;
 
 	case GPIO_B:
-		GPIOB->MODER &= ~(3U << (2 * u8PinNumber));
-		GPIOB->MODER |= ((u8Type & 0x3U) << 2*u8PinNumber);
+		GPIOB->MODER &= GPIO_MODER_RESET(u8PinNumber);
+		GPIOB->MODER |= GPIO_MODER_SET(u8PinNumber, u8Type);
 		break;
 
 	case GPIO_C:
-		GPIOC->MODER &= ~(3U << (2 * u8PinNumber));
-		GPIOC->MODER |= ((u8Type & 0x3U) << 2*u8PinNumber);
+		GPIOC->MODER &= GPIO_MODER_RESET(u8PinNumber);
+		GPIOC->MODER |= GPIO_MODER_SET(u8PinNumber, u8Type);
 		break;
 
 	case GPIO_D:
@@ -39,18 +39,18 @@ void Hal_GPIO_vTyp(short u8PinNumber, short u8Typ, GPIO_X gpio)
 	switch(gpio)
 	{
 	case GPIO_A:
-		GPIOA->OTYPER &= ~(1U << u8PinNumber);
-		GPIOA->OTYPER |= ((u8Typ & 0x1) << u8PinNumber);
+		GPIOA->OTYPER &= GPIO_OTYPER_RESET(u8PinNumber);
+		GPIOA->OTYPER |= GPIO_OTYPER_SET(u8PinNumber, u8Typ);
 		break;
 
 	case GPIO_B:
-		GPIOB->OTYPER &= ~(1U << u8PinNumber);
-		GPIOB->OTYPER |= ((u8Typ & 0x1) << u8PinNumber);
+		GPIOB->OTYPER &= GPIO_OTYPER_RESET(u8PinNumber);
+		GPIOB->OTYPER |= GPIO_OTYPER_SET(u8PinNumber, u8Typ);
 		break;
 
 	case GPIO_C:
-		GPIOC->OTYPER &= ~(1U << u8PinNumber);
-		GPIOC->OTYPER |= ((u8Typ & 0x1) << u8PinNumber);
+		GPIOC->OTYPER &= GPIO_OTYPER_RESET(u8PinNumber);
+		GPIOC->OTYPER |= GPIO_OTYPER_SET(u8PinNumber, u8Typ);
 		break;
 
 	case GPIO_D:
@@ -63,7 +63,8 @@ void Hal_GPIO_vTyp(short u8PinNumber, short u8Typ, GPIO_X gpio)
 
 void Hal_GPIO_vOutputSpeed(short u8PinNumber, short u8OutputSpeed)
 {
-	GPIOA->OSPEEDR |= (u8OutputSpeed << u8PinNumber);
+	GPIOA->OSPEEDR |= GPIO_OPSPEED_RESET(u8PinNumber);
+	GPIOA->OSPEEDR |= GPIO_OPSPEED_SET(u8OutputSpeed, u8PinNumber);
 }
 
 void Hal_GPIO_vPullUpPullDown(short u8PinNumber, short u8PullUpPullDown, GPIO_X gpio)
@@ -71,15 +72,18 @@ void Hal_GPIO_vPullUpPullDown(short u8PinNumber, short u8PullUpPullDown, GPIO_X 
 	switch(gpio)
 	{
 	case GPIO_A:
-		GPIOA->PUPDR |= (u8PullUpPullDown << u8PinNumber);
+		GPIOA->PUPDR &= GPIO_PUPD_RESET(u8PinNumber);
+		GPIOA->PUPDR |= GPIO_PUPD_SET(u8PullUpPullDown, u8PinNumber);
 		break;
 
 	case GPIO_B:
-		GPIOB->PUPDR |= (u8PullUpPullDown << u8PinNumber);
+		GPIOB->PUPDR &= GPIO_PUPD_RESET(u8PinNumber);
+		GPIOB->PUPDR |= GPIO_PUPD_SET(u8PullUpPullDown, u8PinNumber);
 		break;
 
 	case GPIO_C:
-		GPIOC->PUPDR |= (u8PullUpPullDown << u8PinNumber);
+		GPIOC->PUPDR &= GPIO_PUPD_RESET(u8PinNumber);
+		GPIOC->PUPDR |= GPIO_PUPD_SET(u8PullUpPullDown, u8PinNumber);
 		break;
 
 	case GPIO_D:
@@ -95,11 +99,11 @@ void Hal_GPIO_vOutputEnable(short u8PinNumber, GPIO_X gpio)
 	switch(gpio)
 	{
 	case GPIO_A:
-		GPIOA->BSRR = (GPIO_PIN_EN << u8PinNumber);
+		GPIOA->BSRR = GPIO_BSSR_SET(u8PinNumber, GPIO_PIN_EN);
 		break;
 
 	case GPIO_B:
-		GPIOB->BSRR = (GPIO_PIN_EN << u8PinNumber);
+		GPIOB->BSRR = GPIO_BSSR_SET(u8PinNumber, GPIO_PIN_EN);
 		break;
 
 	case GPIO_D:
@@ -119,27 +123,7 @@ void Hal_GPIO_vOutputToggle(short u8PinNumber, GPIO_X gpio)
 		break;
 
 	case GPIO_B:
-		GPIOB->BSRR = (GPIO_PIN_EN << u8PinNumber);
-		break;
-
-	case GPIO_D:
-	case GPIO_E:
-	case GPIO_H:
-	default:
-		break;
-	}
-}
-
-void Hal_GPIO_vOutputDisable(short u8PinNumber, GPIO_X gpio)
-{
-	switch(gpio)
-	{
-	case GPIO_A:
-		GPIOA->BSRR = (1U << (u8PinNumber + 16));
-		break;
-
-	case GPIO_B:
-		GPIOB->BSRR = (1U << (u8PinNumber + 16));
+		GPIOB->BSRR = ~(GPIOB->ODR);
 		break;
 
 	case GPIO_D:
