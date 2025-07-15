@@ -11,6 +11,7 @@
 #include "typedefs.h"
 #include "peripherals.h"
 #include "hal_uart.h"
+#include "../Inc/Drivers/gpio_driver.h"
 
 /*
  * GPIO mode

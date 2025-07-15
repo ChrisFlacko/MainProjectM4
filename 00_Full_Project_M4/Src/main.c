@@ -15,35 +15,38 @@
 #include "../Inc/hal_dma.h"
 #include "../Inc/hal_i2c.h"
 #include "../Inc/hal_adc.h"
+#include "../Inc/hal_spi.h"
+#include "../Inc/hal_rcc.h"
+
+#include "../Inc/Drivers/gpio_driver.h"
+#include "../Inc/Drivers/clock_driver.h"
 
 #include "main.h"
+#include "functions.h"
 #include "stdint.h"
+
+
+/*********************************************************************************************************************************
+ * Defines and Typedefs
+ *********************************************************************************************************************************/
+
+
 
 /*********************************************************************************************************************************
  * Interrupt Handlers
  *********************************************************************************************************************************/
-uint16_t dataADC = 0;
 
 // SysTick interrupt
 void SysTick_Handler(void)
 {
-	Hal_vEnableDMA();
-	uint32_t* prData = Hal_DMA1_vGetTransmitData();
-	int j = 0;
-	for (int i = 0; i < 10; i++)
+	volatile uint16_t dataSPI = Hal_vSPI2_StartReceive();
+	if ( dataSPI != 0)
 	{
-		SSD1306_vWriteDisplay(0, i, prData[j]);
-		j++;
+		Hal_GPIO_vOutputEnable(5, GPIO_A);
 	}
-    dataADC = Hal_ADC_u16ReadChannel();
-    if (dataADC != 0)
-    {
-        Hal_GPIO_vOutputToggle(5, GPIO_A);  // Your action
-    }
-
-	/* Trigger PendSV to keep SysTick predictable */
-	SCB_SHPR3 |= (0xFF << 16);  // Bits[23:16] = PendSV priority
-	SCB_ICSR |= (1U << 28);
+	SendADCtoSlaveUSART();
+//	Hal_vEnableDMAChannel2();
+//	Hal_vEnableDMAChannel3();
 }
 
 void PendSV_Handler()
@@ -57,8 +60,9 @@ void EXTI15_10_IRQHandler(void)
     if (EXTI->PR1 & (1U << 13))  // Check if EXTI13 triggered
     {
         EXTI->PR1 |= (1U << 13);  // Clear pending bit by writing 1
-        Hal_DMA1_vCorruptData();
-        Hal_GPIO_vOutputToggle(5, GPIO_A);  // Your action
+//        Hal_DMA1_vCorruptData();
+    	SendADCtoSlaveUSART();
+//        Hal_GPIO_vOutputToggle(5, GPIO_A);  // Your action
     }
 }
 
@@ -68,8 +72,8 @@ void EXTI15_10_IRQHandler(void)
 
 int main(void)
 {
-	// Activate all system clocks which are needed
-	hal_vEnableRCCclock();
+	/* Activate all clocks which are needed */
+	ClockDriver_vClockSelect();
 
 	// Activate all GPIOs needed
 	Main_vSetupGPIOs();
@@ -85,17 +89,22 @@ int main(void)
 	// USART3 Init
 	Hal_USART3_vInit();
 
+    // ADC1 Init
+    Hal_ADC_vInit();
+
 	// DMA1 Init
-	Hal_DMA1_vInit();
+//	Hal_DMA_1_vInitChannel2();
+//	Hal_DMA_1_vInitChannel3();
 
 	// I2C Init
     Hal_I2C_vInitMaster(OLED);
 
+    // SPI Receiver Init
+    Hal_SPI_vInitReceiver();
+    Hal_SPI2_vInitReceiver();
+
     // OLED SSD Init
     SSD1306_vInit();
-
-    // ADC1 Init
-    Hal_ADC_vInit();
 
 	/***************************************************
 	 * Initial functions
@@ -110,9 +119,6 @@ int main(void)
 	/***************************************************
 	 * Activate the interrupts (system and peripherals)
 	 ***************************************************/
-
-    // Enable Interrupts globally
-    __asm volatile ("CPSIE i");
 
     // Enable Button interrupt
     Hal_ButtonInterrupt_vInit();
@@ -140,8 +146,15 @@ void Main_vSetupGPIOs(void)
 	Config_vSetupGPIO(5, GPIO_OUTPUT, GPIO_PUSHPULL, GPIO_PULLUP, GPIO_A);
 
 	// Activate PB9 for USART3 Tx
-	Config_vSetupGPIO(9, GPIO_AF, GPIO_PUSHPULL, GPIO_PULLUP, GPIO_B);
-	Hal_GPIO_vSetupAlternateFunction(9, 7, GPIO_B);
+//	Config_vSetupGPIO(9, GPIO_AF, GPIO_PUSHPULL, GPIO_PULLUP, GPIO_B);
+//	Hal_GPIO_vSetupAlternateFunction(9, 7, GPIO_B);
+	GPIOB->MODER &= ~(3U << 18);
+	GPIOB->MODER |= (1U << 19);
+	GPIOB->OTYPER &= ~(1U << 9);
+	GPIOB->PUPDR &= ~(3U << 18);
+	GPIOB->OSPEEDR &= ~(3U << 18);
+    GPIOB->AFRH &= ~(0xF << 4);  // Clear AFR for PB9
+    GPIOB->AFRH |=  (0x7 << 4);  // AF7 = USART3
 
 	/* Using PB6 SCL and PB7 SDA, because the other ones interfere with debug */
 	Config_vSetupGPIO(6, GPIO_AF, GPIO_PUSHPULL, GPIO_PULLUP, GPIO_B);
@@ -152,4 +165,46 @@ void Main_vSetupGPIOs(void)
 
     // Activate PA0 for the ADC as Analog input
 	Config_vSetupGPIO(0, GPIO_ANALOG, GPIO_PUSHPULL, GPIO_NON, GPIO_A);
+
+	// PB3 SPI3 SCLK, PB4 SPI3 MISO, PB5 SPI3 MOSI -> AF5
+	GPIOB->MODER &= ~(3U << 10);
+	GPIOB->MODER |= (1U << 11);
+	GPIOB->OTYPER &= ~(1U << 5);
+	GPIOB->PUPDR &= ~(3U << 10);
+	GPIOB->OSPEEDR &= ~(3U << 10);
+    GPIOB->AFRL &= ~(0xF << 20);
+    GPIOB->AFRL |=  (0x6 << 20);  // AF6 = SPI3
+
+	GPIOB->MODER &= ~(3U << 8);
+	GPIOB->MODER |= (1U << 9);
+	GPIOB->OTYPER &= ~(1U << 4);
+	GPIOB->PUPDR &= ~(3U << 8);
+	GPIOB->OSPEEDR &= ~(3U << 8);
+    GPIOB->AFRL &= ~(0xF << 16);
+    GPIOB->AFRL |=  (0x6 << 16);  // AF6 = SPI3
+
+    /* PB3 - SCLK */
+	GPIOB->MODER &= ~(3U << 6);
+	GPIOB->MODER |= (1U << 7);
+	GPIOB->OTYPER &= ~(1U << 3);
+	GPIOB->PUPDR &= ~(3U << 6);
+	GPIOB->OSPEEDR &= ~(3U << 6);
+    GPIOB->AFRL &= ~(0xF << 12);
+    GPIOB->AFRL |=  (0x6 << 12);  // AF6 = SPI3
+
+    /*
+     * For SPI receiving using SPI2: CLK = PB13, MISO = PB14, MOSI = PB15, SSEL/CS = PB12
+     */
+	Config_vSetupGPIO(12, GPIO_AF, GPIO_PUSHPULL, GPIO_PULLUP, GPIO_B);
+	Hal_GPIO_vSetupAlternateFunction(12, 5, GPIO_B);
+	Config_vSetupGPIO(13, GPIO_AF, GPIO_PUSHPULL, GPIO_PULLUP, GPIO_B);
+	Hal_GPIO_vSetupAlternateFunction(13, 5, GPIO_B);
+	Config_vSetupGPIO(14, GPIO_AF, GPIO_PUSHPULL, GPIO_PULLUP, GPIO_B);
+	Hal_GPIO_vSetupAlternateFunction(14, 5, GPIO_B);
+	Config_vSetupGPIO(15, GPIO_AF, GPIO_PUSHPULL, GPIO_PULLUP, GPIO_B);
+	Hal_GPIO_vSetupAlternateFunction(15, 5, GPIO_B);
 }
+
+
+
+

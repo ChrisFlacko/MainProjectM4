@@ -1,0 +1,4 @@
+../Inc/hal_spi.c:11:6:Hal_SPI_vInitReceiver	4	static
+../Inc/hal_spi.c:27:10:Hal_vSPIStartReceive	4	static
+../Inc/hal_spi.c:34:6:Hal_SPI2_vInitReceiver	4	static
+../Inc/hal_spi.c:51:10:Hal_vSPI2_StartReceive	4	static

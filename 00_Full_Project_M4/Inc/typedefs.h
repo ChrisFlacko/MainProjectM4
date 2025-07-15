@@ -205,4 +205,17 @@ typedef struct
 
 }TypeDef_USART;
 
+typedef struct
+{
+	__IO uint32_t CR1;
+	__IO uint32_t CR2;
+	__IO uint32_t SR;
+	__IO uint32_t DR;
+	__IO uint32_t CRCPR;
+	__IO uint32_t RXCRCR;
+	__IO uint32_t TXCRCR;
+	__IO uint32_t I2SCFGR;
+	__IO uint32_t I2SPR;
+}TypeDef_SPI;
+
 #endif /* TYPEDEFS_H_ */

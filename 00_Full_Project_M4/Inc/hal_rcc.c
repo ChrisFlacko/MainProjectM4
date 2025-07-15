@@ -22,6 +22,6 @@ void hal_vEnableRCCclock(void)
     RCC->AHBENR |= (1U << 0);		// DMA1 enable
     RCC->APB1ENR |= (1U << 21);		// I2C1
     RCC->AHBENR |= (1U << 28);		// ADC1 & 2
-
-
+    RCC->APB2ENR |= (1U << 12);		// SPI 1 enable
+    RCC->APB1ENR |= (1U << 15);
 }

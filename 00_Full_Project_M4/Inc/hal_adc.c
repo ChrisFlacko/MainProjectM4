@@ -20,7 +20,7 @@
 void Hal_ADC_vInit(void)
 {
 	ADC_MASTER->CCR &= ~(0x3 << 16);
-	ADC_MASTER->CCR |= ~(0x1 << 16);		// HCLK/1
+	ADC_MASTER->CCR |= (0x1 << 16);		// HCLK/1
     if (ADC1->CR & (1U << 0))  // Check ADEN
     {
         ADC1->CR |= (1U << 1); // Set ADDIS to disable ADC
@@ -50,6 +50,10 @@ void Hal_ADC_vInit(void)
     ADC1->SMPR1 |= (0b111 << 3);	// Long sample time
 
     ADC1->CFGR &= ~(0x3 << 3);		// 12-bit resolution
+    ADC1->CFGR |= (1U << 0);		// Enable DMA
+    ADC1->CFGR &= ~(1U << 1);		// DMA one shot
+
+    ADC1->CFGR |= (1U << 13);  // CONT = 1 => Continuous conversion mode
 }
 
 void Hal_ADC_vStart(void)
@@ -59,7 +63,5 @@ void Hal_ADC_vStart(void)
 
 uint16_t Hal_ADC_u16ReadChannel(void)
 {
-    ADC1->CR |= (1U << 2);                // Start conversion
-    while (!(ADC1->ISR & (1U << 2)));     // Wait for EOC
     return (uint16_t)ADC1->DR;
 }
