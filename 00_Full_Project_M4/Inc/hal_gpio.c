@@ -152,8 +152,8 @@ void Hal_GPIO_vSetupAlternateFunction(uint8_t u8Pin, uint8_t u8AltFunc, GPIO_X g
 			}
 			else
 			{
-			    GPIOA->AFRH &= ~(0xF << (u8Pin*4));
-			    GPIOA->AFRL |=  (u8AltFunc << (u8Pin*4));
+			    GPIOA->AFRH &= ~(0xF << ((u8Pin-8)*4));
+			    GPIOA->AFRH |=  (u8AltFunc << ((u8Pin-8)*4));
 			}
 			break;
 
@@ -165,8 +165,8 @@ void Hal_GPIO_vSetupAlternateFunction(uint8_t u8Pin, uint8_t u8AltFunc, GPIO_X g
 			}
 			else
 			{
-			    GPIOB->AFRH &= ~(0xF << (u8Pin*4));
-			    GPIOB->AFRL |=  (u8AltFunc << (u8Pin*4));
+			    GPIOB->AFRH &= ~(0xF << ((u8Pin-8)*4));
+			    GPIOB->AFRH |=  (u8AltFunc << ((u8Pin-8)*4));
 			}
 			break;
 
@@ -178,8 +178,8 @@ void Hal_GPIO_vSetupAlternateFunction(uint8_t u8Pin, uint8_t u8AltFunc, GPIO_X g
 			}
 			else
 			{
-			    GPIOC->AFRH &= ~(0xF << (u8Pin*4));  // Clear AFR for PB9
-			    GPIOC->AFRL |=  (u8AltFunc << (u8Pin*4));
+			    GPIOC->AFRH &= ~(0xF << ((u8Pin-8)*4));  // Clear AFR for PB9
+			    GPIOC->AFRH |=  (u8AltFunc << ((u8Pin-8)*4));
 			}
 			break;
 
@@ -191,8 +191,8 @@ void Hal_GPIO_vSetupAlternateFunction(uint8_t u8Pin, uint8_t u8AltFunc, GPIO_X g
 			}
 			else
 			{
-			    GPIOD->AFRH &= ~(0xF << (u8Pin*4));  // Clear AFR for PB9
-			    GPIOD->AFRL |=  (u8AltFunc << (u8Pin*4));
+			    GPIOD->AFRH &= ~(0xF << ((u8Pin-8)*4));  // Clear AFR for PB9
+			    GPIOD->AFRH |=  (u8AltFunc << ((u8Pin-8)*4));
 			}
 			break;
 
@@ -204,8 +204,8 @@ void Hal_GPIO_vSetupAlternateFunction(uint8_t u8Pin, uint8_t u8AltFunc, GPIO_X g
 			}
 			else
 			{
-			    GPIOE->AFRH &= ~(0xF << (u8Pin*4));  // Clear AFR for PB9
-			    GPIOE->AFRL |=  (u8AltFunc << (u8Pin*4));
+			    GPIOE->AFRH &= ~(0xF << ((u8Pin-8)*4));  // Clear AFR for PB9
+			    GPIOE->AFRH |=  (u8AltFunc << ((u8Pin-8)*4));
 			}
 			break;
 
@@ -217,8 +217,8 @@ void Hal_GPIO_vSetupAlternateFunction(uint8_t u8Pin, uint8_t u8AltFunc, GPIO_X g
 			}
 			else
 			{
-			    GPIOH->AFRH &= ~(0xF << (u8Pin*4));  // Clear AFR for PB9
-			    GPIOH->AFRL |=  (u8AltFunc << (u8Pin*4));
+			    GPIOH->AFRH &= ~(0xF << ((u8Pin-8)*4));  // Clear AFR for PB9
+			    GPIOH->AFRH |=  (u8AltFunc << ((u8Pin-8)*4));
 			}
 			break;
 

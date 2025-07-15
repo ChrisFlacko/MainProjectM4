@@ -63,7 +63,5 @@ void Hal_ADC_vStart(void)
 
 uint16_t Hal_ADC_u16ReadChannel(void)
 {
-    ADC1->CR |= (1U << 2);                // Start conversion
-    while (!(ADC1->ISR & (1U << 2)));     // Wait for EOC
     return (uint16_t)ADC1->DR;
 }

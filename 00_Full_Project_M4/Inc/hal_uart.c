@@ -55,6 +55,12 @@ void Hal_USART3_vWriteFunction(int ch)
 	USART3->TDR = (ch & 0xFF);
 }
 
+void Hal_USART3_WaitForTxReady(void)
+{
+	/* Transmit register must be empty */
+	while (!(USART3->ISR & 0x80)){}
+}
+
 void Hal_USART2_vEnableSystemInterrupt(void)
 {
 	// Activate Interrupt in NVIC (Only NVIC is needed, no GPIO interrupt)

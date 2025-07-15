@@ -10,9 +10,15 @@
 
 #include "memorymap.h"
 #include "peripherals.h"
+#include "typedefs.h"
 
 void Hal_SPI_vInitReceiver(void);
 
 uint16_t Hal_vSPIStartReceive(void);
+
+void Hal_SPI2_vInitReceiver(void);
+
+uint16_t Hal_vSPI2_StartReceive(void);
+
 
 #endif /* HAL_SPI_H_ */

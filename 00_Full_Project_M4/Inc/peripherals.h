@@ -44,6 +44,7 @@
 
 /* SPI */
 #define SPI1	((TypeDef_SPI*) SPI1_BASE_ADDR)
+#define SPI2	((TypeDef_SPI*) SPI2_BASE_ADDR)
 #define SPI3	((TypeDef_SPI*) SPI3_BASE_ADDR)
 
 #endif /* PERIPHERALS_H_ */

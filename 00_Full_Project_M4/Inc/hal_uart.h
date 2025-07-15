@@ -19,4 +19,6 @@ void Hal_USART3_vWriteFunction(int ch);
 
 void Hal_USART2_vEnableSystemInterrupt(void);
 
+void Hal_USART3_WaitForTxReady(void);
+
 #endif /* HAL_UART_H_ */

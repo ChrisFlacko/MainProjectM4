@@ -65,10 +65,11 @@ void ClockDriver_vClockSelect(void)
 	peripherals.SizeAHB3 = 1;
 	peripherals.AHB3Bus[0] = ADC12_Clock;
 
-	peripherals.SizeAPB1 = 3;
+	peripherals.SizeAPB1 = 4;
 	peripherals.APB1Bus[0] = SPI3_Clock;
 	peripherals.APB1Bus[1] = USART3_Clock;
 	peripherals.APB1Bus[2] = I2C1_Clock;
+	peripherals.APB1Bus[3] = SPI2_Clock;
 
 	peripherals.SizeAPB2 = 2;
 	peripherals.APB2Bus[0] = SYSCFG_Clock;
