@@ -114,6 +114,26 @@ void Hal_GPIO_vOutputEnable(short u8PinNumber, GPIO_X gpio)
 	}
 }
 
+void Hal_GPIO_vOutputDisable(short u8PinNumber, GPIO_X gpio)
+{
+	switch(gpio)
+	{
+	case GPIO_A:
+		GPIOA->BSRR = GPIO_BSSR_SET(u8PinNumber, GPIO_PIN_DIS);
+		break;
+
+	case GPIO_B:
+		GPIOB->BSRR = GPIO_BSSR_SET(u8PinNumber, GPIO_PIN_DIS);
+		break;
+
+	case GPIO_D:
+	case GPIO_E:
+	case GPIO_H:
+	default:
+		break;
+	}
+}
+
 void Hal_GPIO_vOutputToggle(short u8PinNumber, GPIO_X gpio)
 {
 	switch(gpio)

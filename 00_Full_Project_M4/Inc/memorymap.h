@@ -59,6 +59,7 @@
 #define STK_VAL					(*(volatile uint32_t*)0xE000E018)
 #define SCB_ICSR 				(*(volatile uint32_t*)0xE000E00C)
 #define SCB_SHPR3				(*(volatile uint32_t*)0xE000ED20)
+#define ICSR					(*(volatile uint32_t*)0xE000ED04)
 
 
 

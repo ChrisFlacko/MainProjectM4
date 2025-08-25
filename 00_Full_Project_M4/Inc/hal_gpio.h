@@ -46,7 +46,7 @@
  * GPIO activate
  */
 #define GPIO_PIN_EN		1
-#define GPIO_PIN_DIS	1
+#define GPIO_PIN_DIS	0
 
 typedef enum
 {

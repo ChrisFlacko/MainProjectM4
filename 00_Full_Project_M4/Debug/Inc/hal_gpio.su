@@ -3,6 +3,7 @@
 ../Inc/hal_gpio.c:64:6:Hal_GPIO_vOutputSpeed	16	static
 ../Inc/hal_gpio.c:70:6:Hal_GPIO_vPullUpPullDown	16	static
 ../Inc/hal_gpio.c:97:6:Hal_GPIO_vOutputEnable	16	static
-../Inc/hal_gpio.c:117:6:Hal_GPIO_vOutputToggle	16	static
-../Inc/hal_gpio.c:137:6:Config_vSetupGPIO	24	static
-../Inc/hal_gpio.c:144:6:Hal_GPIO_vSetupAlternateFunction	16	static
+../Inc/hal_gpio.c:117:6:Hal_GPIO_vOutputDisable	16	static
+../Inc/hal_gpio.c:137:6:Hal_GPIO_vOutputToggle	16	static
+../Inc/hal_gpio.c:157:6:Config_vSetupGPIO	24	static
+../Inc/hal_gpio.c:164:6:Hal_GPIO_vSetupAlternateFunction	16	static

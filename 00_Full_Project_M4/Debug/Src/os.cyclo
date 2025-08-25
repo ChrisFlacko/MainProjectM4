@@ -1,0 +1,7 @@
+../Src/os.c:22:6:Task1Func	1
+../Src/os.c:31:6:Task2Func	1
+../Src/os.c:40:39:TaskExit	1
+../Src/os.c:48:6:OS_vInitialStackFrame	2
+../Src/os.c:78:6:OS_vStartRTOS	1
+../Src/os.c:107:6:OS_vAddThreads	1
+../Src/os.c:115:24:PendSV_Handler	1

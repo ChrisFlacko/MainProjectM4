@@ -24,6 +24,7 @@
 #include "main.h"
 #include "functions.h"
 #include "stdint.h"
+#include "os.h"
 
 
 /*********************************************************************************************************************************
@@ -39,20 +40,9 @@
 // SysTick interrupt
 void SysTick_Handler(void)
 {
-	volatile uint16_t dataSPI = Hal_vSPI2_StartReceive();
-	if ( dataSPI != 0)
-	{
-		Hal_GPIO_vOutputEnable(5, GPIO_A);
-	}
-	SendADCtoSlaveUSART();
-//	Hal_vEnableDMAChannel2();
-//	Hal_vEnableDMAChannel3();
+	ICSR |= (1 << 28);		// Set PendSV flag
 }
 
-void PendSV_Handler()
-{
-
-}
 
 // Button interrupt
 void EXTI15_10_IRQHandler(void)
@@ -60,9 +50,6 @@ void EXTI15_10_IRQHandler(void)
     if (EXTI->PR1 & (1U << 13))  // Check if EXTI13 triggered
     {
         EXTI->PR1 |= (1U << 13);  // Clear pending bit by writing 1
-//        Hal_DMA1_vCorruptData();
-    	SendADCtoSlaveUSART();
-//        Hal_GPIO_vOutputToggle(5, GPIO_A);  // Your action
     }
 }
 
@@ -72,60 +59,26 @@ void EXTI15_10_IRQHandler(void)
 
 int main(void)
 {
-	/* Activate all clocks which are needed */
+	/* 1. Activate clocks and all modules needed */
 	ClockDriver_vClockSelect();
-
-	// Activate all GPIOs needed
 	Main_vSetupGPIOs();
-
-	/***************************************************
-	 * Activate all the peripherals:
-	 * 	- USART3
-	 * 	- DMA1
-	 * 	- I2C1
-	 * 	- ADC1
-	 ***************************************************/
-
-	// USART3 Init
 	Hal_USART3_vInit();
-
-    // ADC1 Init
     Hal_ADC_vInit();
-
-	// DMA1 Init
-//	Hal_DMA_1_vInitChannel2();
-//	Hal_DMA_1_vInitChannel3();
-
-	// I2C Init
     Hal_I2C_vInitMaster(OLED);
-
-    // SPI Receiver Init
     Hal_SPI_vInitReceiver();
     Hal_SPI2_vInitReceiver();
-
-    // OLED SSD Init
-    SSD1306_vInit();
-
-	/***************************************************
-	 * Initial functions
-	 ***************************************************/
-
-    // Reset Display
-    SSD1306_vResetDisplay();
-
-    // Start ADC1
     Hal_ADC_vStart();
 
-	/***************************************************
-	 * Activate the interrupts (system and peripherals)
-	 ***************************************************/
-
-    // Enable Button interrupt
+    /* 2. Initialize the Interrupts needed */
     Hal_ButtonInterrupt_vInit();
-
-    // Enable SysTick interrupt
 	Hal_SysTick_vInit();
+	SCB_SHPR3 = (15U<<16) | (14U<<24);
+	__asm volatile("CPSIE i");
 
+	/* 3. Setup the RTOS */
+    OS_vInitialStackFrame();
+    OS_vAddThreads();
+    OS_vStartRTOS();
 
     while(1)
     {
@@ -195,13 +148,13 @@ void Main_vSetupGPIOs(void)
     /*
      * For SPI receiving using SPI2: CLK = PB13, MISO = PB14, MOSI = PB15, SSEL/CS = PB12
      */
-	Config_vSetupGPIO(12, GPIO_AF, GPIO_PUSHPULL, GPIO_PULLUP, GPIO_B);
+	Config_vSetupGPIO(12, GPIO_AF, GPIO_PUSHPULL, GPIO_NON, GPIO_B);
 	Hal_GPIO_vSetupAlternateFunction(12, 5, GPIO_B);
-	Config_vSetupGPIO(13, GPIO_AF, GPIO_PUSHPULL, GPIO_PULLUP, GPIO_B);
+	Config_vSetupGPIO(13, GPIO_AF, GPIO_PUSHPULL, GPIO_NON, GPIO_B);
 	Hal_GPIO_vSetupAlternateFunction(13, 5, GPIO_B);
-	Config_vSetupGPIO(14, GPIO_AF, GPIO_PUSHPULL, GPIO_PULLUP, GPIO_B);
+	Config_vSetupGPIO(14, GPIO_AF, GPIO_PUSHPULL, GPIO_NON, GPIO_B);
 	Hal_GPIO_vSetupAlternateFunction(14, 5, GPIO_B);
-	Config_vSetupGPIO(15, GPIO_AF, GPIO_PUSHPULL, GPIO_PULLUP, GPIO_B);
+	Config_vSetupGPIO(15, GPIO_AF, GPIO_PUSHPULL, GPIO_NON, GPIO_B);
 	Hal_GPIO_vSetupAlternateFunction(15, 5, GPIO_B);
 }
 
