@@ -20,9 +20,9 @@
  * The systick is part of the SCS register, which is located at the address: 0xFFF0F003.
  * From there, the systick registers are divided by an offset.
  */
-#define HCLK_FREQ     	16000000  // 16 MHz
-#define TICK_HZ       	1000      // 1 ms tick
-#define RELOAD_VAL    	((HCLK_FREQ / TICK_HZ))
+#define HCLK_FREQ     	8000000  // 16 MHz
+#define TICK_HZ       	1	      // 1 s tick
+#define RELOAD_VAL    	((HCLK_FREQ / TICK_HZ)-1)
 #define CTRL_ENABLE		(1U<<0)
 #define CTRL_TICKINT	(1U<<1)
 #define CTRL_CLKSRC		(1U<<2)

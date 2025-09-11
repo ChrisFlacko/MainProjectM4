@@ -14,7 +14,8 @@ Src/main.o: ../Src/main.c ../Inc/../Inc/peripherals.h \
  ../Src/../Inc/Drivers/gpio_driver.h ../Src/../Inc/Drivers/clock_driver.h \
  ../Src/../Inc/Drivers/../memorymap.h \
  ../Src/../Inc/Drivers/../peripherals.h \
- ../Src/../Inc/Drivers/../typedefs.h ../Src/main.h ../Src/functions.h
+ ../Src/../Inc/Drivers/../typedefs.h ../Src/main.h ../Src/functions.h \
+ ../Src/os.h
 ../Inc/../Inc/peripherals.h:
 ../Inc/../Inc/memorymap.h:
 ../Inc/../Inc/typedefs.h:
@@ -48,3 +49,4 @@ Src/main.o: ../Src/main.c ../Inc/../Inc/peripherals.h \
 ../Src/../Inc/Drivers/../typedefs.h:
 ../Src/main.h:
 ../Src/functions.h:
+../Src/os.h:

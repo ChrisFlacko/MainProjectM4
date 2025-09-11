@@ -1,0 +1,7 @@
+../Src/os.c:22:6:Task1Func	8	static
+../Src/os.c:31:6:Task2Func	8	static
+../Src/os.c:40:39:TaskExit	4	static,ignoring_inline_asm
+../Src/os.c:48:6:OS_vInitialStackFrame	16	static
+../Src/os.c:78:6:OS_vStartRTOS	4	static,ignoring_inline_asm
+../Src/os.c:107:6:OS_vAddThreads	4	static
+../Src/os.c:115:24:PendSV_Handler	0	static,ignoring_inline_asm

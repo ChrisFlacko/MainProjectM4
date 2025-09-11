@@ -9,6 +9,7 @@
 "./Inc/hal_uart.o"
 "./Src/functions.o"
 "./Src/main.o"
+"./Src/os.o"
 "./Src/syscalls.o"
 "./Src/sysmem.o"
 "./Startup/startup_stm32f303retx.o"
