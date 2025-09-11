@@ -16,12 +16,24 @@
 /* Stack size frame */
 #define STACK_SIZE 		250U
 
+/* Task states */
+typedef enum taskState
+{
+	t_ready,
+	t_running,
+	t_blocked,
+	t_sleeping
+}taskState_e;
+
 /* Task control block */
 typedef struct tcb
 {
-	uint32_t *psp;
-	struct tcb *nextPt;
-
+	uint32_t *psp;			// Psp of the task
+	struct tcb *nextPt;		// Pointer to the next task
+	uint8_t prio;			// Priority of the task 0-8
+	taskState_e state;		// Which state the task is currently in
+	uint32_t waitTick;		// Sleep/Timeout ticks
+	void *waitObj;			// Object which is waited for
 }TCB;
 
 /* Tasks */
